@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 @Getter
 public class MemberResponse {
 
-    private Long id;
-    private String name;
+    private final Long id;
+    private final String name;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
