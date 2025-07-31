@@ -20,7 +20,7 @@ public class MemberService {
     @Transactional
     public MemberResponse save(MemberRequest memberRequest) {
         Member savedMember = memberRepository.save(new Member(memberRequest.getName()));
-        return new MemberResponse(savedMember.getId(), savedMember.getName());
+        return new MemberResponse(savedMember.getId(), savedMember.getName(), savedMember.getCreatedAt(), savedMember.getModifiedAt());
     }
 
     @Transactional(readOnly = true)
@@ -29,7 +29,7 @@ public class MemberService {
         List<MemberResponse> dtos = new ArrayList<>();
 
         for (Member member : members) {
-            MemberResponse memberResponse = new MemberResponse(member.getId(), member.getName());
+            MemberResponse memberResponse = new MemberResponse(member.getId(), member.getName(), member.getCreatedAt(), member.getModifiedAt());
             dtos.add(memberResponse);
         }
         return dtos;
@@ -40,7 +40,7 @@ public class MemberService {
         Member member = memberRepository.findById(memberId).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 memberID가 없습니다.")
         );
-        return new MemberResponse(member.getId(), member.getName());
+        return new MemberResponse(member.getId(), member.getName(), member.getCreatedAt(), member.getModifiedAt());
     }
 
     @Transactional
@@ -49,7 +49,7 @@ public class MemberService {
                 () -> new IllegalArgumentException("해당하는 memberID가 없습니다.")
         );
         member.updateName(memberRequest.getName());
-        return new MemberResponse(member.getId(), memberRequest.getName());
+        return new MemberResponse(member.getId(), memberRequest.getName(), member.getCreatedAt(), member.getModifiedAt());
     }
 
     @Transactional
